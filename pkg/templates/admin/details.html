@@ -1,0 +1,27 @@
+{%extends 'admin/adminlayout.html'%}
+{% block content%}
+{% if user != None%}
+<div class="p-5 m-5">
+  <div class="col-md-3 ">
+    <img src="/static/uploads/{{user.user_image}}" class="img-fluid" alt="profile picture">
+  </div>
+  <div>
+    <p>First name:{{user.user_fname}}</p>
+  </div>
+  <div>
+    <p>Lastname:{{user.user_lname}}</p>
+  </div>
+  <div>
+    <p>Email Address:{{user.user_email}}</p>
+  </div>
+  <div>
+    <p>Location:{{user.mystate.state_name}}</p>
+  </div>
+  <div>
+    <p>Phone:{{user.user_phone}}</p>
+  </div>
+</div>
+{%else%}
+  <h3>No Records found</h3>
+{% endif %}
+{% endblock %}

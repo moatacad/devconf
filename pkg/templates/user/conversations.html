@@ -1,0 +1,33 @@
+{%extends 'user/layout.html'%}
+{%block content %}
+
+<div class="container-fluid">
+  <div class="row mb-3">
+    <a href="/makepost" class="btn btn-lg col-2 btn-warning">New Post</a>
+  </div>
+  {%if allposts%}
+  {%for a in allposts%}
+  <div class="row">
+    <div class="col-md-11">
+      <a class="h3" href="/comments/{{a.post_id}}" style="text-decoration: none;">{{a.post_title}}</a>
+        <p>{{a.post_content}}</p>
+      <p>
+        <i>Posted By: </i><span>{{a.userdeets.user_fname}}</span>
+        <i>Date: </i><span>10th July,2022</span>
+        <i>({{a.comments|count()}} comments)</span>
+      </p>
+    </div>
+  </div>
+  {%endfor%}
+  {% else%}
+  <div class="row">
+    <div class="col-md-11">
+      <div class="alert alert-warning">
+        No post has been made yet. <a href="/makepost" class="alert-link">Start a conversation</a>
+      </div>
+    </div>
+  </div>
+  {%endif%}
+</div>
+
+{% endblock %}

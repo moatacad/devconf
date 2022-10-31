@@ -1,0 +1,37 @@
+{%extends 'admin/adminlayout.html'%}
+{% block header %}
+  Conference Products
+{%endblock%}
+{% block content %}
+  <a href="{{url_for('new_product')}}" class="btn btn-warning"></a>
+  <table class="table table-striped">
+    <tr>
+      <th>
+        S/N
+      </th>
+      <th>
+        Product Name
+      </th>
+      <th>
+        Product Price
+      </th>
+      <th>
+        Action
+      </th>
+    </tr>
+    {%if all_products%}
+    {%for p in all_products%}
+    <tr>
+      <td>{{loop.index}}</td>
+      <td>{{p.product_name}}</td>
+      <td>{{p.product_price}}</td>
+      <td>Edit|Delete</td>
+    </tr>
+    {% endfor%}
+    {%else%}
+    <tr>
+      <td colspan="4">No Product Found</td>
+    </tr>
+    {% endif %}
+  </table>
+{%endblock%}

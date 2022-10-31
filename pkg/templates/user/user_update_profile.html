@@ -1,0 +1,74 @@
+{% extends 'user/layout.html'%}
+{% block content%}
+<div class="container-fluid">
+  <div class="row" style="justify-content: center;">
+    <div class="col-4 rounded p-5" style="box-shadow: 1px 1px 3px;">
+      <form action="" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="">Upload Profile Photo</label>
+          <input type="file" name="file" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="">Firstname</label>
+          <input type="text" value="{{records.user_fname}}" name="fname" placeholder="Enter Your Firstname" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="">Lastname</label>
+          <input type="text" name="lname" value="{{records.user_lname}}" placeholder="Enter Your Lastname" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="">State</label>
+          <select name="stateid" class="form-select" id="state">
+            {% if state%}
+            {%for s in state%}
+              <option value="{{s.state_id}}">{{s.state_name}}</option>
+            {%endfor%}
+            {% endif%}
+          </select>
+        </div>
+        <div class="mb-3" >
+          <label for="">LGA</label>
+          <div class="col-8" >
+            <select name="" class="form-select" id="lgas">
+
+            </select>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="">Phone</label>
+          <input type="text" name="phone" value="{{records.user_phone}}" class="form-control">
+        </div>
+        <div class="mb-3">
+          <input type="hidden" name="csrf_token" value="{{csrf_token()}}" class="form-control">
+        </div>
+        <div class="mb-3">
+          <button type="submit" class="btn btn-warning col-12">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{%endblock%}
+{% block customjs%}
+<script>
+  $('document').ready(function(){
+    $('#state').change(function(){
+      var selected_state=$(this).val()
+      var data2send={'stateid':selected_state}
+      $.ajax({
+        url:"{{url_for('getlga')}}",
+        type:'get',
+        data:data2send,
+        dataType:'text',
+        success:function(msg){
+            $('#lgas').html(msg)
+        },
+        error:function(err){
+          console.log(err)
+        }
+      })
+    })
+  })
+  
+</script>
+{% endblock %}

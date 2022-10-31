@@ -1,0 +1,29 @@
+{%extends 'user/layout.html'%}
+{% block content%}
+<form action="" method="post" novalidate>
+  <div class=" row mb-3">
+    <span class="text-danger">{{p.title.errors}}</span>
+    <label class="col-md-3" for="">{{p.title.label}}</label>
+    {{p.title(class_='form-control col-md-6',placeholder='Enter your title')}}
+  </div>
+  <div class=" row mb-3">
+    <span>{{p.content.errors}}</span>
+    <label class="col-md-3" for="">{{p.content.label}}</label>
+    {{p.content(class_='form-control col-md-6',placeholder='Enter your Content')}}
+  </div>
+  <div class="row">
+    {{p.submit(class_='btn btn-outline-warning',onclick='validate(event)')}}
+  </div>
+  <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+</form>
+<script type="text/javascript">
+  function validate(E){
+    var title=document.getElementById('title').value
+    var content=document.getElementById('content').value
+    if(title=='' || content==''){
+      alert('Please Complete All Fields')
+      e.preventDefault()
+    }
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{%extends 'admin/adminlayout.html'%}
+{% block header %}
+  New Product
+{%endblock%}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+      <form action="" method="post">
+        {{frm.item_name.label(class_='form-label')}}
+        {{frm.item_name(class_='form-control')}}
+        {{frm.item_price.label(class_='form-label')}}
+        {{frm.csrf_token}}
+        {{frm.item_price(class_='form-control')}}
+        {{frm.submit(class_='btn btn-primary')}}
+      </form>
+    </div>
+  </div>
+</div>
+{%endblock%}

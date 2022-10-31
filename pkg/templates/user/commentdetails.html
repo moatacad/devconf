@@ -1,0 +1,75 @@
+{% extends 'user/layout.html'%}
+{% block content%}
+{% if post%}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-11">
+      <p class="h3">{{post.post_title}}</p>
+        <p>{{post.post_content}}</p>
+      <p>
+        <i>Posted By: </i><span>{{post.userdeets.user_fname}}</span>
+        <i>Date: </i><span>10th July,2022</span>
+        <i>{{comment|count}}</i><span> comments</span>
+      </p>
+    </div>
+  </div>
+  {%if comment%}
+  {%for i in comment%}
+    <div class="row" id="comments">
+      <div class="col-md-11">
+        <p>{{i.comment_content}}</p>
+      </div>
+    </div>
+  {%endfor%}
+  {%else%}
+  <div class="row">
+    <div class="col-md-11">
+      <p class="h4">No Comments Made</p>
+    </div>
+  </div>
+  {%endif%}
+  <div class="row">
+    <div class="col-md-11">
+      <form action="" id="myform">
+        <textarea name="comment" id="comment" cols="30" rows="5" class="form-textarea"></textarea>
+        <button class="btn btn-warning" type="button" id="btn">Comment</button>
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+      </form>
+
+    </div>
+  </div>
+</div>
+{%else%}
+<div>
+  <h1>Route Not Found Click Here To go Back</h1>
+  <a href=""></a>
+</div>
+{%endif%}
+{%endblock%}
+{% block customjs%}
+<script>
+  $(document).ready(function(){
+    $('#btn').click(function(){
+      var data2send=$('#myform').serialize()
+      $.ajax({
+        url:'/comments/{{post.post_id}}',
+        data:data2send,
+        type:'post',
+        dataType:'json',
+        beforeSend:function(){
+          $('#btn').html('Please wait...')
+        },
+        success:function(response){
+          $('#comments').append("<p style='font-family:Courier New;color:blue'>"+response['comment']+"</p><span>Made By"+response['madeby']+"</span>")
+          $('#comment').val('')
+          $('#btn').html('Send Comment')
+        },
+        error:function(errormsg){
+          console.log(errormsg)
+          $('#btn').html('Send Comment')
+        }
+      })
+    })
+  })
+</script>
+{%endblock%}

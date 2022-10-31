@@ -1,0 +1,48 @@
+{% extends 'admin/adminlayout.html'%}
+{% block content%}
+  <table class="table table-striped">
+    <tr>
+      <th>
+        S/N
+      </th>
+      <th>
+        Fullname
+      </th>
+      <th>
+        State
+      </th>
+      <th>
+        Email
+      </th>
+      <th>
+        Actions
+      </th>
+    </tr>
+    {% if regs%}
+    {%for i,y in regs%}
+    <tr>
+      <td>
+        {{loop.index}}
+      </td>
+      <td>
+        {{i.user_fname}} {{i.user_lname}}
+      </td>
+      <td>
+        {{y.state_name}}
+      </td>
+      <td>
+        {{i.user_email}}
+      </td>
+      <td>
+        <a href="/admin/details/{{i.user_id}}">Details|</a>
+        <a href="/admin/delete/{{i.user_id}}" onclick="return confirm('Are You Sure You Want to Delete This User?')">Delete User</a>
+      </td>
+    </tr>
+    {%else%}
+    <tr>
+      <td colspan="4">No User Found</td>
+    </tr>
+    {% endfor%}
+    {% endif %}
+  </table>
+{%endblock%}

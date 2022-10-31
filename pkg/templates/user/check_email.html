@@ -1,0 +1,31 @@
+{% extends 'user/layout.html'%}
+{% block content%}
+<input type="email" class="form-control col-5" id="email">
+<i class="text-danger small" id="chk_email"></i><br>
+<button class="btn btn-primary">check</button>
+{%endblock%}
+{% block customjs%}
+<script type="text/javascript">
+  $('document').ready(function(){
+    $('button').click(function(){
+      var email_ajax=$('#email').val()
+      var csrf='{{csrf_token()}}'
+      var data2send={'email':email_ajax,'csrf_token':csrf}
+      $.ajax({
+        url:"{{url_for('chk_email')}}",
+        type:'post',
+        data:data2send,
+        dataType:'text',
+        success:function(msg){
+            $('#chk_email').html(msg)
+        },
+        error:function(err){
+          console.log(err)
+        }
+      })
+    })
+  })
+  
+
+</script>
+{%endblock%}
